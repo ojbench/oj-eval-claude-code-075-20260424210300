@@ -4,11 +4,14 @@ project(problem_075)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(code str.hpp)
-
-# Create an empty main.cpp if it doesn't exist
+# Create a minimal main.cpp for testing locally
 if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
-    file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp "int main() { return 0; }")
+    file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp "#include \"str.hpp\"\nint main() { return 0; }")
 endif()
 
-target_sources(code PRIVATE main.cpp)
+add_executable(code str.hpp main.cpp)
+
+# Only add main.cpp to gitignore for local builds
+set(SRC_FILES_TO_IGNORE
+    main.cpp
+)
